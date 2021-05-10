@@ -19,4 +19,15 @@ public class DomainKafkaConsumer {
 			System.out.println(String.format("Domain consumed [%s] Status [%s]", domain.getDomain(),domain.isDead()));
 		});	
 	}
+	
+	@Bean
+	public Consumer<KStream<String, Domain>> domainCountryService()
+	{
+		return kstream -> kstream.foreach((key,domain) -> {
+			
+			System.out.println(String.format("Domain Country Consumed [%s] Status [%s]", domain.getDomain(),domain.getCountry()));
+			
+		});
+
+	}
 }

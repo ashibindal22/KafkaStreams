@@ -4,10 +4,12 @@ server:
 
 spring.cloud.stream:
   function:
-    definition: domainService
+    definition: domainService;domainCountryService
   bindings:
     domainService-in-0:
       destination: active.web-domains
+    domainCountryService-in-0:
+      destination: country.web-domains
   kafka:
     bindings:
       domainService-in-0:
