@@ -29,8 +29,21 @@ public class DomainKafkaProcessor {
 			}
 			return !domain.isDead(); 
 		});
-		
-		
-		
 	}
+	
+	@Bean
+	public Function<KStream<String, Domain>, KStream<String, Domain>> domainCountryProcessor()
+	{
+		return (kstream) -> kstream.filter((key,domain) -> 
+		{
+			if(domain.getCountry()!= null)
+			{
+				System.out.println("Not null Countries: " + domain.getDomain()+ " " + domain.getCountry());
+			}
+			
+			return domain.getCountry()!= null;
+		});
+	}
+	
+	
 }

@@ -3,12 +3,25 @@ server:
 
 spring.cloud.stream:
   function:
-    definition: domainProcessor
+    definition: domainProcessor;domainCountryProcessor
   bindings:
     domainProcessor-in-0:
       destination: web-domains
     domainProcessor-out-0:
       destination: active.web-domains
+    domainCountryProcessor-in-0:
+          destination: web-domains
+    domainCountryProcessor-out-0:
+          destination: country.web-domains
+      
+#  spring.cloud:#    stream:#      function:#        definition:  domainCountryProcessor
+#      bindings:
+#        domainCountryProcessor-in-0:
+#          destination: web-domains
+#        domainCountryProcessor-out-0:
+#          destination: country.web-domains
+
+
   kafka:
     bindings:
       domainProcessor-in-0:
@@ -21,6 +34,19 @@ spring.cloud.stream:
           configuration:
             value:
               serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      
+      domainCountryProcessor-in-0:
+        consumer:
+          configuration:
+            value:
+              deserializer: org.springframework.kafka.support.serializer.JsonDeserializer  
+      domainCountryProcessor-out-0:
+        consumer:
+          configuration:
+            value:
+              deserializer: org.springframework.kafka.support.serializer.JsonDeserializer      
+ 
+ 
     binder:
       brokers:
         - localhost:9092
